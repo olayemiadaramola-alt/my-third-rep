@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriFlow - Premium Diet Scheduler</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="navbar-brand">
+                    <h2>🥗 NutriFlow</h2>
+                    <span class="brand-subtitle">Premium Diet Scheduler</span>
+                </div>
+                <div class="navbar-menu">
+                    <button class="nav-btn active" data-section="landing">Home</button>
+                    <button class="nav-btn" data-section="dashboard">Dashboard</button>
+                    <button class="nav-btn" data-section="meals">Meal Plan</button>
+                    <button class="nav-btn" data-section="grocery">Grocery</button>
+                    <button class="nav-btn" data-section="progress">Progress</button>
+                    <button class="nav-btn" data-section="profile">Profile</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Landing Section -->
+    <section id="landing" class="section landing-section">
+        <div class="container">
+            <div class="landing-hero">
+                <h1>Welcome to NutriFlow Premium</h1>
+                <p class="hero-subtitle">Your AI-powered nutrition companion with advanced automation</p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Meal Planning</h3>
+                        <p>Automated weekly meal plans tailored to your goals</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Smart Analytics</h3>
+                        <p>Real-time nutrient tracking with intelligent insights</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛒</div>
+                        <h3>Auto Grocery Lists</h3>
+                        <p>Shopping lists generated from your meal plans</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💪</div>
+                        <h3>Motivational Boost</h3>
+                        <p>Personalized encouragement and achievement tracking</p>
+                    </div>
+                </div>
+                <button class="cta-btn" onclick="startApp()">Get Started</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="section">
+        <div class="container">
+            <h2>Your Health Dashboard</h2>
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Today's Progress</h3>
+                    <div class="progress-ring">
+                        <canvas id="progressChart" width="200" height="200"></canvas>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="value" id="caloriesEaten">1,234</span>
+                            <span class="label">/ 1,800 calories</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Weekly Streak</h3>
+                    <div class="streak-display">
+                        <span class="streak-number">7</span>
+                        <span class="streak-text">days strong! 🔥</span>
+                    </div>
+                    <div class="motivation-message" id="motivationMsg">
+                        "Great job staying consistent! 🌟"
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Today's Meals</h3>
+                    <div class="meal-list" id="todayMeals">
+                        <!-- Meals will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Achievements</h3>
+                    <div class="achievement-grid" id="achievements">
+                        <!-- Achievements will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meal Plan Section -->
+    <section id="meals" class="section">
+        <div class="container">
+            <h2>Weekly Meal Plan</h2>
+            <div class="meal-planner">
+                <div class="day-selector">
+                    <button class="day-btn active" data-day="monday">Mon</button>
+                    <button class="day-btn" data-day="tuesday">Tue</button>
+                    <button class="day-btn" data-day="wednesday">Wed</button>
+                    <button class="day-btn" data-day="thursday">Thu</button>
+                    <button class="day-btn" data-day="friday">Fri</button>
+                    <button class="day-btn" data-day="saturday">Sat</button>
+                    <button class="day-btn" data-day="sunday">Sun</button>
+                </div>
+
+                <div class="meals-container" id="mealsContainer">
+                    <!-- Meals for selected day will be shown here -->
+                </div>
+
+                <button class="regenerate-btn" onclick="regenerateMealPlan()">
+                    🤖 Regenerate AI Meal Plan
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grocery Section -->
+    <section id="grocery" class="section">
+        <div class="container">
+            <h2>Smart Grocery List</h2>
+            <div class="grocery-container">
+                <div class="grocery-header">
+                    <p>Automatically generated from your weekly meal plan</p>
+                    <button class="export-btn">📄 Export List</button>
+                </div>
+
+                <div class="grocery-categories" id="groceryList">
+                    <!-- Grocery categories will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section id="progress" class="section">
+        <div class="container">
+            <h2>Progress Analytics</h2>
+            <div class="analytics-grid">
+                <div class="card">
+                    <h3>Nutrition Breakdown</h3>
+                    <canvas id="nutritionChart" width="300" height="200"></canvas>
+                </div>
+
+                <div class="card">
+                    <h3>Weekly Trends</h3>
+                    <canvas id="weeklyChart" width="300" height="200"></canvas>
+                </div>
+
+                <div class="card">
+                    <h3>Goal Achievement</h3>
+                    <div class="goal-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Protein Goal</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 85%"></div>
+                            </div>
+                            <span class="metric-value">102g / 120g</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Carb Goal</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 72%"></div>
+                            </div>
+                            <span class="metric-value">144g / 200g</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Fat Goal</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 90%"></div>
+                            </div>
+                            <span class="metric-value">63g / 70g</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profile" class="section">
+        <div class="container">
+            <h2>Profile Settings</h2>
+            <div class="profile-grid">
+                <div class="card">
+                    <h3>Personal Info</h3>
+                    <form class="profile-form">
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" value="28" id="age">
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (lbs)</label>
+                            <input type="number" value="150" id="weight">
+                        </div>
+                        <div class="form-group">
+                            <label>Goal</label>
+                            <select id="goal">
+                                <option value="maintain">Maintain Weight</option>
+                                <option value="lose">Lose Weight</option>
+                                <option value="gain">Gain Weight</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3>Dietary Preferences</h3>
+                    <div class="preferences">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> Vegetarian Friendly
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox"> Gluten Free
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox"> Low Carb
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox"> High Protein
+                        </label>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Automation Settings</h3>
+                    <div class="automation-controls">
+                        <label class="switch-label">
+                            <span>Smart Reminders</span>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </label>
+                        <label class="switch-label">
+                            <span>Auto Meal Planning</span>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </label>
+                        <label class="switch-label">
+                            <span>Motivational Boosts</span>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
